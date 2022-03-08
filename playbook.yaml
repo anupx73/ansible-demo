@@ -1,0 +1,24 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: apt update
+      apt:
+        upgrade: yes
+        update_cache: yes
+
+    - name: install new packages
+      apt: 
+        name:
+          - libssl-dev
+          - python-cryptography
+        state: present 
+        update_cache: yes  
+
+    - name: copy new app version
+      copy: 
+        src: /app
+        dest: /home/ubuntu/flaskapp
+        owner: ubuntu
+        group: ubuntu
+        mode: 0644
